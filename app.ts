@@ -1,5 +1,14 @@
 export {};
 
-let message: string = 'Hello, TypeScript Wow!';
+let messages: string[] = ['Hello', 'baby', 'world! '];
 
-console.log(message);
+function awesome(message: string, repeat: number): string {
+  return message.repeat(repeat);
+}
+
+function notAwesome(message: string): string {
+    return message;
+}
+
+console.log(notAwesome(messages.join(' ')));
+console.log(awesome(messages.join(' '), 3));
