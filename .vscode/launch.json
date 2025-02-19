@@ -15,7 +15,7 @@
             "outFiles": [
                 "${workspaceFolder}/out/**/*.js"
             ],
-            "preLaunchTask": "Compile TypeScript",
+            "preLaunchTask": "tsc: build - tsconfig.json",
             "internalConsoleOptions": "openOnSessionStart"
         }
     ]
