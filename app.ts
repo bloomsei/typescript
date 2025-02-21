@@ -1,4 +1,41 @@
-function GetAllMovies() {
+interface Movie {
+    title: string;
+    director: string;
+    yearReleased: number;
+    streaming: boolean;
+    logReview?: ReviewLogger;
+}
+
+interface ReviewLogger {
+    (review: string): void;
+}
+
+interface Person {
+    name: string;
+    email: string;
+}
+
+interface Director extends Person {
+    numMoviesDirected: number;
+}
+
+interface CastMember extends Person {
+    role: string;
+    rehearse: (sceneNumber: number) => void;
+}
+
+class Performer implements CastMember {
+    name: string = '';
+    email: string = '';
+    role: string = '';
+
+    rehearse(sceneNumber: number): void {
+        console.log(`${this.name} is rehearsing scene ${sceneNumber}`);
+    }
+}
+
+
+function GetAllMovies(): Movie[] {
     return [
         { title: 'The Godfather', director: 'Francis Ford Coppola', yearReleased: 1972, streaming: true },
         { title: 'The Shawshank Redemption', director: 'Frank Darabont', yearReleased: 1994, streaming: true },
@@ -22,20 +59,16 @@ function GetReview(title: string): string | number {
     }
 }
 
-function PrintMovieInfo(title: string, year: number, ...cast: string[]): void {
-    console.log(`Title: ${title}`);
-    console.log(`Year: ${year}`);
-    for (const actor of cast) {
-        console.log(`  Actor: ${actor}`);
+function PrintMovieInfo(movie: Movie): void {
+    console.log(`Title: ${movie.title}`);
+    console.log(`Year: ${movie.yearReleased}`);
+    console.log(`Director: ${movie.director}`);
+    if (movie.logReview) {
+        movie.logReview(`Review: ${GetReview(movie.title)}`);
     }
 }
 
 const LogMessage = (message: string) => console.log(message);
-
-PrintMovieInfo('The Godfather', 1972, 'Marlon Brando', 'Al Pacino');
-PrintMovieInfo('The Dark Knight', 2008);
-
-LogMessage('Hello, World!');
 
 function GetTitles(director: string): string[];
 function GetTitles(director: string, streaming: boolean): string[];
@@ -49,3 +82,82 @@ function GetTitles(director: string, streaming?: boolean): string[] {
 }
 
 console.log(GetTitles('The Wachowskis', true));
+
+let myMovie = {
+    title: 'Pulp Fiction',
+    director: 'Quentin Tarantino',
+    yearReleased: 1994,
+    streaming: true,
+    genre: 'Crime',
+    watched: true,
+    logReview: LogMessage
+}
+
+PrintMovieInfo(myMovie);
+
+interface StringGenerator {
+    (chars: string, nums: number): string;
+}
+
+function CreateMovieId(title: string, id: number): string {
+    return title + id;
+}
+
+let idGenerator: StringGenerator = CreateMovieId;
+
+let favPerformer: CastMember = new Performer();
+favPerformer.name = 'Tom Hanks';
+favPerformer.rehearse(1);
+
+abstract class Video {
+    private title: string;
+    protected year: number;
+    static medium: string = 'Digital';
+
+    constructor(title: string, year: number) {
+        this.title = title;
+        this.year = year;
+        console.log('Video created');
+    }
+
+    printItem(): void {
+        console.log(`${this.title} was created in ${this.year} and produced by ${this.producer}`);
+    }
+
+    private _producer: string = '';
+    get producer(): string {
+        return this._producer.toUpperCase();
+    }
+
+    set producer(producer: string) {
+        this._producer = producer;
+    }
+
+    abstract printCredits(): void;
+}
+
+class Documentary extends Video {
+    constructor(title: string, year: number, public subject: string) {
+        super(title, year);
+    }
+
+    printItem(): void {
+        super.printItem();
+        console.log(`Documentary subject: ${this.subject} (${this.year})`);
+    }
+
+    printCredits(): void {
+        console.log('Credits: ...');
+    }
+}
+
+let Musical = class extends Video {
+    printCredits(): void {
+        console.log('MUSICAL');
+        console.log(`Producer: ${this.producer}`);
+    }
+}
+
+let musical = new Musical('The Sound of Music', 1965);
+musical.producer = 'Robert Wise';
+musical.printCredits();
