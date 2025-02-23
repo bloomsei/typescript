@@ -1,38 +1,6 @@
-interface Movie {
-    title: string;
-    director: string;
-    yearReleased: number;
-    streaming: boolean;
-    logReview?: ReviewLogger;
-}
-
-interface ReviewLogger {
-    (review: string): void;
-}
-
-interface Person {
-    name: string;
-    email: string;
-}
-
-interface Director extends Person {
-    numMoviesDirected: number;
-}
-
-interface CastMember extends Person {
-    role: string;
-    rehearse: (sceneNumber: number) => void;
-}
-
-class Performer implements CastMember {
-    name: string = '';
-    email: string = '';
-    role: string = '';
-
-    rehearse(sceneNumber: number): void {
-        console.log(`${this.name} is rehearsing scene ${sceneNumber}`);
-    }
-}
+import { Movie, PrintMovieInfo } from './movie';
+import { CastMember, Performer } from './cast';
+import { Video } from './video';
 
 
 function GetAllMovies(): Movie[] {
@@ -49,24 +17,7 @@ function GetAllMovies(): Movie[] {
     ];
 }
 
-function GetReview(title: string): string | number {
-    if (title === 'The Godfather') {
-        return 9.5;
-    } else if (title === 'The Dark Knight') {
-        return 9;
-    } else {
-        return 'No review found';
-    }
-}
 
-function PrintMovieInfo(movie: Movie): void {
-    console.log(`Title: ${movie.title}`);
-    console.log(`Year: ${movie.yearReleased}`);
-    console.log(`Director: ${movie.director}`);
-    if (movie.logReview) {
-        movie.logReview(`Review: ${GetReview(movie.title)}`);
-    }
-}
 
 const LogMessage = (message: string) => console.log(message);
 
@@ -95,61 +46,11 @@ let myMovie = {
 
 PrintMovieInfo(myMovie);
 
-interface StringGenerator {
-    (chars: string, nums: number): string;
-}
-
-function CreateMovieId(title: string, id: number): string {
-    return title + id;
-}
-
-let idGenerator: StringGenerator = CreateMovieId;
-
 let favPerformer: CastMember = new Performer();
 favPerformer.name = 'Tom Hanks';
 favPerformer.rehearse(1);
 
-abstract class Video {
-    private title: string;
-    protected year: number;
-    static medium: string = 'Digital';
 
-    constructor(title: string, year: number) {
-        this.title = title;
-        this.year = year;
-        console.log('Video created');
-    }
-
-    printItem(): void {
-        console.log(`${this.title} was created in ${this.year} and produced by ${this.producer}`);
-    }
-
-    private _producer: string = '';
-    get producer(): string {
-        return this._producer.toUpperCase();
-    }
-
-    set producer(producer: string) {
-        this._producer = producer;
-    }
-
-    abstract printCredits(): void;
-}
-
-class Documentary extends Video {
-    constructor(title: string, year: number, public subject: string) {
-        super(title, year);
-    }
-
-    printItem(): void {
-        super.printItem();
-        console.log(`Documentary subject: ${this.subject} (${this.year})`);
-    }
-
-    printCredits(): void {
-        console.log('Credits: ...');
-    }
-}
 
 let Musical = class extends Video {
     printCredits(): void {
