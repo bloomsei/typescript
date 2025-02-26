@@ -39,3 +39,10 @@ class Documentary extends Video {
         console.log('Credits: ...');
     }
 }
+
+let Musical = class extends Video {
+    printCredits(): void {
+        console.log('MUSICAL');
+        console.log(`Producer: ${this.producer}`);
+    }
+}
