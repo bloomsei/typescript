@@ -20,3 +20,7 @@ tsc init
 tsc
 ```
 
+## Find type definitions
+
+DefinitelyTyped: https://definitelytyped.org/
+
