@@ -25,11 +25,12 @@ export abstract class Video {
     abstract printCredits(): void;
 }
 
-class Documentary extends Video {
+export class Documentary extends Video {
     constructor(title: string, year: number, public subject: string) {
         super(title, year);
     }
 
+    @logMethodInfo
     printItem(): void {
         super.printItem();
         console.log(`Documentary subject: ${this.subject} (${this.year})`);
@@ -45,4 +46,13 @@ let Musical = class extends Video {
         console.log('MUSICAL');
         console.log(`Producer: ${this.producer}`);
     }
+}
+
+function logMethodInfo(original: any, _context: ClassMethodDecoratorContext) {
+    function replacementMethod(this: any, ...args: any[]) {
+        console.log(`The method ${_context.name as string} was called`);
+        console.log(`The construct: ${_context.kind}`);
+        return original.call(this, ...args);
+    }
+    return replacementMethod;
 }
