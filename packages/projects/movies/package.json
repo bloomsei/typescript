@@ -1,0 +1,10 @@
+{
+  "name": "@learning/movies",
+  "version": "1.0.0",
+  "private": true,
+  "main": "out/app.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node out/app.js"
+  }
+}

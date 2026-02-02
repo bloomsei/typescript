@@ -1,21 +1,18 @@
 {
-    // Use IntelliSense to learn about possible attributes.
-    // Hover to view descriptions of existing attributes.
-    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
+            "name": "Movies",
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/app.ts",
+            "program": "${workspaceFolder}/packages/projects/movies/src/app.ts",
             "outFiles": [
-                "${workspaceFolder}/out/**/*.js"
+                "${workspaceFolder}/packages/projects/movies/out/**/*.js"
             ],
-            "preLaunchTask": "tsc: build - tsconfig.json",
+            "preLaunchTask": "tsc: build - packages/projects/movies/tsconfig.json",
             "internalConsoleOptions": "openOnSessionStart"
         }
     ]
