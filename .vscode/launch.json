@@ -4,6 +4,20 @@
         {
             "type": "node",
             "request": "launch",
+            "name": "Concepts (Current File)",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "program": "${file}",
+            "outFiles": [
+                "${workspaceFolder}/packages/concepts/out/**/*.js"
+            ],
+            "preLaunchTask": "tsc: build - packages/concepts/tsconfig.json",
+            "internalConsoleOptions": "openOnSessionStart"
+        },
+        {
+            "type": "node",
+            "request": "launch",
             "name": "Movies",
             "skipFiles": [
                 "<node_internals>/**"
